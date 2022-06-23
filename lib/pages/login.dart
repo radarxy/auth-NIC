@@ -4,6 +4,8 @@ import 'package:mgmt/main.dart';
 import 'package:flutter/material.dart';
 import 'package:mgmt/pages/home.dart';
 import 'package:mgmt/pages/register.dart';
+import 'package:mgmt/provider/google_sign_in.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -18,21 +20,6 @@ class _LoginPageState extends State<LoginPage> {
 
   final emailEC = new TextEditingController();
   final passwordEC = new TextEditingController();
-  /*
-  movetohome(BuildContext context) async {
-    if (_formkey.currentState!.validate()) {
-      setState(() {
-        changebutton = true;
-      });
-      await Future.delayed(const Duration(seconds: 1));
-      // ignore: use_build_context_synchronously
-      //myroutes.homeroute);
-      setState(() {
-        changebutton = false;
-      });
-    }
-  }
-  */
 
   @override
   Widget build(BuildContext context) {
@@ -106,6 +93,32 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
 
+    final googleSignIn = Material(
+      color: Color(0xff999999),
+      borderRadius: BorderRadius.circular(10),
+      child: InkWell(
+        onTap: () {
+          final provider =
+              Provider.of<GoogleSignInProvider>(context, listen: false);
+          provider.googleLogin();
+        },
+        child: AnimatedContainer(
+          duration: const Duration(seconds: 1),
+          width: changebutton ? 75 : 300,
+          height: 50,
+          // decoration: BoxDecoration(
+          //     color: Colors.deepPurple,
+          //     borderRadius: BorderRadius.circular(10)),
+          alignment: Alignment.center,
+          child: const Text(
+            'Google Sign Up',
+            style: TextStyle(
+                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+        ),
+      ),
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Login Page'),
@@ -143,6 +156,10 @@ class _LoginPageState extends State<LoginPage> {
                       const SizedBox(
                         height: 10,
                       ),
+                      googleSignIn,
+                      const SizedBox(
+                        height: 40,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -160,7 +177,7 @@ class _LoginPageState extends State<LoginPage> {
                               "Sign Up",
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
-                          )
+                          ),
                         ],
                       )
                     ],

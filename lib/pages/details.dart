@@ -1,39 +1,60 @@
 import 'package:flutter/material.dart';
 import 'package:mgmt/pages/login.dart';
 
-class RegisterPage extends StatefulWidget {
-  const RegisterPage({Key? key}) : super(key: key);
+class DetailsPage extends StatefulWidget {
+  const DetailsPage({Key? key}) : super(key: key);
 
   @override
-  State<RegisterPage> createState() => _RegisterPageState();
+  State<DetailsPage> createState() => _DetailsPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _DetailsPageState extends State<DetailsPage> {
   final _formkey = GlobalKey<FormState>();
-  final nameEC = new TextEditingController();
+  final firstnameEC = new TextEditingController();
   final emailEC = new TextEditingController();
   final passwordEC = new TextEditingController();
   final cnfpasswordEC = new TextEditingController();
 
+  String _ratingController = 'Haryana';
+
   @override
   Widget build(BuildContext context) {
     //name
-    final nameField = TextFormField(
+    final firstnameField = TextFormField(
       autofocus: false,
-      controller: nameEC,
+      controller: firstnameEC,
       keyboardType: TextInputType.name,
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return "Name can't be empty";
+          return "First Name can't be empty";
         }
       },
       onSaved: (value) {
-        nameEC.text = value!;
+        firstnameEC.text = value!;
       },
       textInputAction: TextInputAction.next,
       decoration: const InputDecoration(
-        hintText: "enter Name",
-        labelText: "Name",
+        hintText: "enter First Name",
+        labelText: "First Name",
+      ),
+    );
+
+    final secondnameField = TextFormField(
+      autofocus: false,
+      controller: firstnameEC,
+      keyboardType: TextInputType.name,
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return "Second Name can't be empty";
+        }
+      },
+      onSaved: (value) {
+        firstnameEC.text = value!;
+      },
+      textInputAction: TextInputAction.next,
+      decoration: const InputDecoration(
+        hintText: "enter Second Name",
+        labelText: "Second Name",
       ),
     );
 
@@ -57,49 +78,64 @@ class _RegisterPageState extends State<RegisterPage> {
       ),
     );
 
-    //pasword
-    final passwordField = TextFormField(
-      obscureText: true,
-      autofocus: false,
-      controller: passwordEC,
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return "Password can't be empty";
-        }
+    final stateField = DropdownButtonFormField<String>(
+      value: _ratingController,
+      items: [
+        'Andhra Pradesh',
+        'Arunachal Pradesh',
+        'Assam',
+        'Bihar',
+        'Chhattisgarh',
+        'Goa',
+        'Gujarat',
+        'Haryana',
+        'Himachal Pradesh',
+        'Jharkhand',
+        'Karnataka',
+        'Kerala',
+        'Madhya Pradesh',
+        'Maharashtra',
+        'Manipur',
+        'Meghalaya',
+        'Mizoram',
+        'Nagaland',
+        'Odisha',
+        'Punjab',
+        'Rajasthan',
+        'Sikkim',
+        'Tamil Nadu',
+        'Telangana',
+        'Tripura',
+        'Uttar Pradesh',
+        'Uttarakhand',
+        'West Bengal',
+        'Andaman and Nicobar Islands',
+        'Chandigarh',
+        'Dadra & Nagar Haveli & Daman & Diu',
+        'Delhi',
+        'Jammu and Kashmir',
+        'Lakshadweep',
+        'Puducherry',
+        'Ladakh'
+      ]
+          .map((label) => DropdownMenuItem(
+                child: Text(label.toString()),
+                value: label,
+              ))
+          .toList(),
+      hint: Text('Rating'),
+      onChanged: (value) {
+        setState(
+          () {
+            _ratingController = value!;
+          },
+        );
       },
-      onSaved: (value) {
-        passwordEC.text = value!;
-      },
-      textInputAction: TextInputAction.next,
-      decoration: const InputDecoration(
-        hintText: "enter Password",
-        labelText: "Password",
-      ),
-    );
-
-    //confirm pasword
-    final cnfpasswordField = TextFormField(
-      obscureText: true,
-      autofocus: false,
-      controller: cnfpasswordEC,
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return "Password can't be empty";
-        }
-      },
-      onSaved: (value) {
-        cnfpasswordEC.text = value!;
-      },
-      textInputAction: TextInputAction.done,
-      decoration: const InputDecoration(
-        hintText: "confirm Password",
-        labelText: "Confirm Password",
-      ),
     );
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Signup Page'),
+        title: const Text('Your Details'),
         backgroundColor: Color(0xff4a4e69),
       ),
       body: SingleChildScrollView(
@@ -118,7 +154,11 @@ class _RegisterPageState extends State<RegisterPage> {
                       vertical: 16.0, horizontal: 32.0),
                   child: Column(
                     children: [
-                      nameField,
+                      firstnameField,
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      secondnameField,
                       const SizedBox(
                         height: 20,
                       ),
@@ -126,11 +166,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       const SizedBox(
                         height: 20,
                       ),
-                      passwordField,
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      cnfpasswordField,
+                      stateField,
                       const SizedBox(
                         height: 20,
                       ),
