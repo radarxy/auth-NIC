@@ -8,32 +8,29 @@ import 'package:mgmt/pages/profile.dart';
 import 'package:mgmt/provider/google_sign_in.dart';
 import 'package:provider/provider.dart';
 
-
 const primaryColor = Color(0xFF4a4e69);
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => GoogleSignInProvider(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Shop Allocation',
-        theme: ThemeData(
-          primaryColor: primaryColor,
-        ),
-        home: MyApp(),
+    MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Shop Allocation',
+      theme: ThemeData(
+        primaryColor: primaryColor,
       ),
+      home: MyApp(),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      //body: ShopAlloc(),
-      body: LoginPage(),
-    );
-  }
+  Widget build(BuildContext context) => ChangeNotifierProvider(
+        create: (context) => GoogleSignInProvider(),
+        child: Scaffold(
+          //body: ShopAlloc(),
+          body: LoginPage(),
+        ),
+      );
 }

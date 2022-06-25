@@ -1,8 +1,13 @@
+import 'package:http/http.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/instance_manager.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mgmt/main.dart';
 import 'package:flutter/material.dart';
 import 'package:mgmt/pages/home.dart';
+import 'package:mgmt/pages/profile.dart';
 import 'package:mgmt/pages/register.dart';
 import 'package:mgmt/provider/google_sign_in.dart';
 import 'package:provider/provider.dart';
@@ -80,9 +85,6 @@ class _LoginPageState extends State<LoginPage> {
           duration: const Duration(seconds: 1),
           width: changebutton ? 75 : 300,
           height: 50,
-          // decoration: BoxDecoration(
-          //     color: Colors.deepPurple,
-          //     borderRadius: BorderRadius.circular(10)),
           alignment: Alignment.center,
           child: const Text(
             'Login',
@@ -106,9 +108,6 @@ class _LoginPageState extends State<LoginPage> {
           duration: const Duration(seconds: 1),
           width: changebutton ? 75 : 300,
           height: 50,
-          // decoration: BoxDecoration(
-          //     color: Colors.deepPurple,
-          //     borderRadius: BorderRadius.circular(10)),
           alignment: Alignment.center,
           child: const Text(
             'Google Sign Up',
@@ -157,6 +156,12 @@ class _LoginPageState extends State<LoginPage> {
                         height: 10,
                       ),
                       googleSignIn,
+                      // Obx(() {
+                      //   if (googlecontroller.googleAccount.value == null)
+                      //     return ProfilePage();
+                      //   else
+                      //     return HomePage();
+                      // }),
                       const SizedBox(
                         height: 40,
                       ),
