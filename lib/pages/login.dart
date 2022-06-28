@@ -100,9 +100,7 @@ class _LoginPageState extends State<LoginPage> {
       borderRadius: BorderRadius.circular(10),
       child: InkWell(
         onTap: () {
-          final provider =
-              Provider.of<GoogleSignInProvider>(context, listen: false);
-          provider.googleLogin();
+          signup(context);
         },
         child: AnimatedContainer(
           duration: const Duration(seconds: 1),
