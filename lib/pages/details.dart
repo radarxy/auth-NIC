@@ -44,6 +44,7 @@ class _DetailsPageState extends State<DetailsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final color = Colors.black;
     //name
     final firstnameField = TextFormField(
       autofocus: false,
@@ -187,7 +188,7 @@ class _DetailsPageState extends State<DetailsPage> {
       items: [
         'Categories',
         'food',
-        'NGCC',
+        'NZCC',
         'education',
         'cosmetics',
         'jewellery',
@@ -293,7 +294,7 @@ class _DetailsPageState extends State<DetailsPage> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(20.0),
+          padding: EdgeInsets.all(15.0),
           child: Form(
             child: Column(
               // ignore: prefer_const_literals_to_create_immutables
@@ -302,16 +303,33 @@ class _DetailsPageState extends State<DetailsPage> {
                 const SizedBox(
                   height: 20,
                 ),
-                image != null
-                    ? Image.file(
-                        image!,
-                        width: 150,
-                        height: 150,
-                        fit: BoxFit.cover,
-                      )
-                    : FlutterLogo(
-                        size: 100,
+                Stack(
+                  children: [
+                    InkWell(
+                      onTap: () => pickImage(ImageSource.gallery),
+                      child: image != null
+                          ? ClipOval(
+                              child: Image.file(
+                                image!,
+                                width: 150,
+                                height: 150,
+                                fit: BoxFit.cover,
+                              ),
+                            )
+                          : FlutterLogo(
+                              size: 100,
+                            ),
+                    ),
+                    Positioned(
+                      bottom: 0,
+                      right: 4,
+                      child: InkWell(
+                        onTap: () => pickImage(ImageSource.camera),
+                        child: buildEditIcon(color),
                       ),
+                    )
+                  ],
+                ),
                 const SizedBox(
                   height: 20,
                 ),
@@ -320,6 +338,7 @@ class _DetailsPageState extends State<DetailsPage> {
                       vertical: 16.0, horizontal: 32.0),
                   child: Column(
                     children: [
+                      /*
                       Material(
                         color: Colors.lightGreen,
                         borderRadius: BorderRadius.circular(10),
@@ -342,10 +361,8 @@ class _DetailsPageState extends State<DetailsPage> {
                           ),
                         ),
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Material(
+                      */
+                      /*Material(
                         color: Colors.lightGreen,
                         borderRadius: BorderRadius.circular(10),
                         child: InkWell(
@@ -367,35 +384,7 @@ class _DetailsPageState extends State<DetailsPage> {
                           ),
                         ),
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Material(
-                        color: Colors.blueGrey,
-                        borderRadius: BorderRadius.circular(10),
-                        child: InkWell(
-                          onTap: () async {
-                            final result =
-                                await FilePicker.platform.pickFiles();
-                            if (result == null) return;
-                          },
-                          child: Container(
-                            width: 300,
-                            height: 50,
-                            // decoration: BoxDecoration(
-                            //     color: Colors.deepPurple,
-                            //     borderRadius: BorderRadius.circular(10)),
-                            alignment: Alignment.center,
-                            child: const Text(
-                              'Upload PDF',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18),
-                            ),
-                          ),
-                        ),
-                      ),
+                      */
                       const SizedBox(
                         height: 20,
                       ),
@@ -440,6 +429,35 @@ class _DetailsPageState extends State<DetailsPage> {
                         height: 50,
                       ),
                       Material(
+                        color: Color.fromARGB(255, 151, 156, 160),
+                        borderRadius: BorderRadius.circular(10),
+                        child: InkWell(
+                          onTap: () async {
+                            final result =
+                                await FilePicker.platform.pickFiles();
+                            if (result == null) return;
+                          },
+                          child: Container(
+                            width: 300,
+                            height: 50,
+                            // decoration: BoxDecoration(
+                            //     color: Colors.deepPurple,
+                            //     borderRadius: BorderRadius.circular(10)),
+                            alignment: Alignment.center,
+                            child: const Text(
+                              'Upload PDF',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Material(
                         color: Color(0xff4a4e69),
                         borderRadius: BorderRadius.circular(10),
                         child: InkWell(
@@ -473,3 +491,30 @@ class _DetailsPageState extends State<DetailsPage> {
     );
   }
 }
+
+Widget buildEditIcon(Color color) => buildCircle(
+      all: 3,
+      color: Colors.white,
+      child: buildCircle(
+        child: Icon(
+          Icons.camera_enhance,
+          color: Colors.white,
+          size: 20,
+        ),
+        all: 8,
+        color: Colors.black,
+      ),
+    );
+
+Widget buildCircle({
+  required Widget child,
+  required double all,
+  required Color color,
+}) =>
+    ClipOval(
+      child: Container(
+        padding: EdgeInsets.all(all),
+        color: Colors.blue,
+        child: child,
+      ),
+    );
